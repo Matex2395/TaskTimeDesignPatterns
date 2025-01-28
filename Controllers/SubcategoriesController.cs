@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TaskTimeDesignPatterns.Commands;
 using TaskTimePredicter.Data;
 using TaskTimePredicter.Models;
 
@@ -58,26 +59,27 @@ namespace TaskTimePredicter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SubcategoryId,SubcategoryName,SubcategoryDescription,CategoryId")] Subcategory subcategory)
+        public async Task<IActionResult> Create([Bind("SubcategoryName,SubcategoryDescription,CategoryId")] Subcategory subcategory)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                //Búsqueda de Categoría correspondiente por CategoryId
-                if (subcategory.CategoryId.HasValue)
-                {
-                    subcategory.Category = await _context.Categories
-                        .FirstOrDefaultAsync(c => c.CategoryId == subcategory.CategoryId.Value);
-                    _context.Add(subcategory);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Seleccione una Categoría para Asociar";
-                }
+                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+                return View(subcategory);
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", subcategory.CategoryId);
-            return View(subcategory);
+
+            var command = new CreateSubcategoryCommand(_context, subcategory.SubcategoryName, subcategory.SubcategoryDescription, subcategory.CategoryId);
+
+            try
+            {
+                await command.ExecuteAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", subcategory.CategoryId);
+                return View(subcategory);
+            }
         }
 
         // GET: Subcategories/Edit/5
@@ -109,33 +111,25 @@ namespace TaskTimePredicter.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    if (subcategory.CategoryId.HasValue)
-                    {
-                        subcategory.Category = await _context.Categories
-                            .FirstOrDefaultAsync(c => c.CategoryId == subcategory.CategoryId.Value);
-                    }
-                    _context.Update(subcategory);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SubcategoryExists(subcategory.SubcategoryId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", subcategory.CategoryId);
+                return View(subcategory);
+            }
+
+            var command = new EditSubcategoryCommand(_context, id, subcategory.SubcategoryName, subcategory.SubcategoryDescription, subcategory.CategoryId);
+
+            try
+            {
+                await command.ExecuteAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", subcategory.CategoryId);
-            return View(subcategory);
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", subcategory.CategoryId);
+                return View(subcategory);
+            }
         }
 
         // GET: Subcategories/Delete/5
