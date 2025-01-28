@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TaskTimeDesignPatterns.Interfaces;
 using TaskTimePredicter.Data;
 using TaskTimePredicter.Models;
 
@@ -15,10 +16,12 @@ namespace TaskTimePredicter.Controllers
     public class ProjectsController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IProjectFactory _projectFactory;
 
-        public ProjectsController(AppDbContext context)
+        public ProjectsController(AppDbContext context, IProjectFactory projectFactory)
         {
             _context = context;
+            _projectFactory = projectFactory;
         }
 
         // GET: Projects
@@ -61,7 +64,8 @@ namespace TaskTimePredicter.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(project);
+                var createdProject = _projectFactory.CreateProject(project.ProjectName, project.ProjectDescription);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
