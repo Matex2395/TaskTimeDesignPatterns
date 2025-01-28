@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TaskTimePredicter.Models.Category>
+
+@{
+    ViewData["Title"] = "Lista Categorías";
+}
+
+<h1>Lista de Categorías</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Crear Nueva Categoría</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre de Categoría
+            </th>
+            <th>
+                Descripción de Categoría
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryDescription)
+            </td>
+            <td>
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.CategoryId">Detalles</a> |
+                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CategoryId">Editar</a>
+                @* <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.CategoryId">Eliminar</a> *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

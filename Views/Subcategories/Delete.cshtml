@@ -1,0 +1,39 @@
+﻿@model TaskTimePredicter.Models.Subcategory
+
+@{
+    ViewData["Title"] = "Eliminar Subcategoría";
+}
+
+<h1>Borrar Subcategoría</h1>
+
+<h3>¿Seguro que quieres borrar esta subcategoría?</h3>
+<div>
+    <h4>Subcategoría Seleccionada</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Nombre de la Subcategoría
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SubcategoryName)
+        </dd>
+        <dt class = "col-sm-2">
+            Descripción de la Subcategoría
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SubcategoryDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            Categoría Asociada
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="SubcategoryId" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a la Lista de Subcategorías</a>
+    </form>
+</div>

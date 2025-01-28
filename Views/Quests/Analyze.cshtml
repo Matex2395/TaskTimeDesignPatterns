@@ -1,0 +1,47 @@
+﻿<h2>Análisis Combinado</h2>
+
+<h3>Productividad por Proyectos</h3>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Proyecto</th>
+            <th>Tiempo Estimado Total</th>
+            <th>Tiempo Real Total</th>
+            <th>Eficiencia (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var proyecto in Model.ProductividadProyectos)
+        {
+            <tr>
+                <td>@proyecto.Proyecto</td>
+                <td>@proyecto.TiempoEstimadoTotal</td>
+                <td>@proyecto.TiempoRealTotal</td>
+                <td>@proyecto.Eficiencia</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Tiempo Promedio por Categorías y Subcategorías</h3>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Categoría</th>
+            <th>Subcategoría</th>
+            <th>Tiempo Promedio Estimado (horas)</th>
+            <th>Tiempo Promedio Real (horas)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var categoria in Model.TiempoPromedioCategorias)
+        {
+            <tr>
+                <td>@categoria.Categoria</td>
+                <td>@categoria.Subcategoria</td>
+                <td>@categoria.TiempoPromedioEstimado</td>
+                <td>@categoria.TiempoPromedioReal</td>
+            </tr>
+        }
+    </tbody>
+</table>

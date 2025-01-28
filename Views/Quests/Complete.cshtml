@@ -1,0 +1,46 @@
+﻿@model TaskTimePredicter.Models.Quest
+
+@{
+    ViewData["Title"] = "Completar Tarea";
+}
+
+<h1>Completar Tarea: @Model.QuestName</h1>
+
+<p>Ingrese el tiempo actual dedicado a la tarea:</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Complete" method="post">
+            <input type="hidden" asp-for="QuestId" />
+            <input type="hidden" asp-for="QuestName" />
+            <input type="hidden" asp-for="EstimatedTime" />
+            <input type="hidden" asp-for="QuestState" value="Completada" />
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="CategoryId" />
+            <input type="hidden" asp-for="SubcategoryId" />
+            <input type="hidden" asp-for="ProjectId" />
+            <div class="form-group">
+                <label for="ActualTime">Tiempo Actual (en horas):</label>
+                <input asp-for="ActualTime" class="form-control" type="number" step="0.01" min="0.01" required />
+                <span asp-validation-for="ActualTime" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">Marcar como Completada</button>
+        </form>
+    </div>
+</div>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<div>
+    <a asp-action="Index">Volver a la Lista de Tareas</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

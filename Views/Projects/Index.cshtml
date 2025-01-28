@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TaskTimePredicter.Models.Project>
+
+@{
+    ViewData["Title"] = "Lista Proyectos";
+}
+
+<h1>Lista de Proyectos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Crear Nuevo Proyecto</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre de Proyecto
+            </th>
+            <th>
+                Descripción de Proyecto
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectDescription)
+            </td>
+            <td>
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.ProjectId">Details</a> |
+                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ProjectId">Edit</a>
+                @* <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ProjectId">Delete</a> *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

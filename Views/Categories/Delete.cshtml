@@ -1,0 +1,33 @@
+﻿@model TaskTimePredicter.Models.Category
+
+@{
+    ViewData["Title"] = "Eliminar Categoría";
+}
+
+<h1>Borrar Categoría</h1>
+
+<h3>¿Seguro que quieres borrar esta categoría?</h3>
+<div>
+    <h4>Categoría Seleccionada</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Nombre de la Categoría
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+        <dt class = "col-sm-2">
+            Descripción de la Categoría
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CategoryDescription)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CategoryId" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a la Lista de Categorías</a>
+    </form>
+</div>

@@ -1,0 +1,50 @@
+﻿@model TaskTimePredicter.Models.Subcategory
+
+@{
+    ViewData["Title"] = "Editar Subcategoría";
+}
+
+<h1>Editar Subcategoría</h1>
+
+<h4>Subcategoría Seleccionada</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SubcategoryId" />
+            <div class="form-group">
+                <label class="control-label">Nombre de la Subcategoría</label>
+                <input asp-for="SubcategoryName" class="form-control" />
+                <span asp-validation-for="SubcategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Descripción de la Subcategoría</label>
+                <input asp-for="SubcategoryDescription" class="form-control" />
+                <span asp-validation-for="SubcategoryDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Categoría Asociada</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a la Lista de Subcategorías</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

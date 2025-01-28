@@ -1,0 +1,96 @@
+﻿@model IEnumerable<TaskTimePredicter.Models.Quest>
+
+@{
+    ViewData["Title"] = "Lista Tareas";
+}
+
+<h1>Lista de Tareas</h1>
+
+<p>
+    ***"Tiempo Estimado"" & "Tiempo Actual" están expresadas en Horas***
+</p>
+<p>
+    <a asp-action="Create" class="btn btn-success">Crear Nueva Tarea</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre Tarea
+            </th>
+            <th>
+                Tiempo Estimado
+            </th>
+            <th>
+                Tiempo Actual
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Fecha Creación
+            </th>
+            <th>
+                Responsable
+            </th>
+            <th>
+                Categoría
+            </th>
+            <th>
+                Subcategoría
+            </th>
+            <th>
+                Proyecto
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuestName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstimatedTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActualTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuestState)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subcategory.SubcategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.ProjectName)
+                </td>
+                <td>
+                    <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.QuestId">Detalles</a> |
+                    @if (item.QuestState == "Completada")
+                    {
+                        <button class="btn btn-secondary" disabled>Completar</button>
+                        <button class="btn btn-secondary" disabled>Editar</button>
+                        <button class="btn btn-secondary" disabled>Eliminar</button>
+                    }
+                    else
+                    {
+                        <a asp-action="Complete" class="btn btn-success" asp-route-id="@item.QuestId">Completar</a>
+                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.QuestId">Editar</a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.QuestId">Eliminar</a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

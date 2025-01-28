@@ -1,0 +1,63 @@
+﻿@model TaskTimePredicter.Models.Quest
+
+@{
+    ViewData["Title"] = "Eliminar Tarea";
+}
+
+<h1>Borrar Tarea</h1>
+
+<h3>¿Estás seguro que quieres eliminar esta tarea?</h3>
+<div>
+    <h4>Tarea a Eliminar</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Nombre Tarea
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.QuestName)
+        </dd>
+        <dt class = "col-sm-2">
+            Tiempo Estimado para completar la tarea
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EstimatedTime)
+        </dd>
+        <dt class = "col-sm-2">
+            Fecha de Creación
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+        <dt class = "col-sm-2">
+            Usuario Asignado
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.UserName)
+        </dd>
+        <dt class = "col-sm-2">
+            Categoría de la Tarea
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+        <dt class="col-sm-2">
+            Subcategoría de la Tarea
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subcategory.SubcategoryName)
+        </dd>
+        <dt class="col-sm-2">
+            Proyecto Asignado
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Project.ProjectName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="QuestId" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a la Lista de Tareas</a>
+    </form>
+</div>

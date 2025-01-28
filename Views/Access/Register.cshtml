@@ -1,0 +1,44 @@
+﻿@model TaskTimePredicter.ViewModels.UserVM;
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="row mt-5 justify-content-center">
+        <div class="col-sm-4">
+            <div class="card-header">
+                Regístrate
+            </div>
+            <div class="card-body">
+                <form asp-controller="Access" asp-action="Register" method="post">
+                    <input class="form-control mb-3" type="text" placeholder="Nombre" required asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <input class="form-control mb-3" type="text" placeholder="Correo" required asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <input class="form-control mb-3" type="password" placeholder="Contraseña" required asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <input class="form-control mb-3" type="password" placeholder="Confirmar Contraseña" required asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <div class="d-grid gap-2 mb-3">
+                        <button class="btn btn-primary" type="submit">Regístrate</button>
+                    </div>
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+                    ¿Ya tienes una cuenta? <a asp-controller="Access" asp-action="Login">Inicia Sesión</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

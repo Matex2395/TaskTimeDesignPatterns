@@ -1,0 +1,55 @@
+﻿@model TaskTimePredicter.Models.Quest
+
+@{
+    ViewData["Title"] = "Editar Tarea";
+}
+
+<h1>Editar Tarea</h1>
+
+<h4>Tarea Seleccionada</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="QuestId" />
+            <input type="hidden" asp-for="QuestState" value="En Progreso" />
+            <div class="form-group">
+                <label class="control-label">Nombre Tarea</label>
+                <input asp-for="QuestName" class="form-control" />
+                <span asp-validation-for="QuestName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tiempo Estimado para completarla</label>
+                <input asp-for="EstimatedTime" class="form-control" type="number" step="0.01" min="0.01" required />
+                <span asp-validation-for="EstimatedTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Subcategoría a la que pertenece</label>
+                <select asp-for="SubcategoryId" class="form-control" asp-items="ViewBag.SubcategoryId"></select>
+                <span asp-validation-for="SubcategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Proyecto al que pertenece</label>
+                <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
+            </div>
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a la Lista de Tareas</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

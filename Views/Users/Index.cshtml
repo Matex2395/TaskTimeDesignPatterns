@@ -1,0 +1,68 @@
+﻿@model IEnumerable<TaskTimePredicter.Models.User>
+
+@{
+    ViewData["Title"] = "Lista Usuarios";
+}
+
+<h1>Lista de Usuarios</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Crear Usuario</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre Usuario
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Contraseña
+            </th>
+            <th>
+                Rol
+            </th>
+            <th>
+                Fecha Creación
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserPassword)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserRole)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.UserId" class="btn btn-primary">Detalles</a> |
+                @if (item.UserRole == "Administrator")
+                {
+                    <button class="btn btn-secondary" disabled>Editar</button>
+                    <button class="btn btn-secondary" disabled>Eliminar</button>
+                }
+                else 
+                {
+                    <a asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-danger">Eliminar</a>
+
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
