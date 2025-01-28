@@ -1,11 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using TaskTimePredicter.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using TaskTimeDesignPatterns.Interfaces;
+using TaskTimeDesignPatterns.Factories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Configuración de Dependencias
+builder.Services.AddScoped<IUserFactory, UserFactory>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConStr"))

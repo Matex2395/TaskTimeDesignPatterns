@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using TaskTimeDesignPatterns.Interfaces;
 using TaskTimePredicter.Data;
 using TaskTimePredicter.Models;
 
@@ -16,10 +17,12 @@ namespace TaskTimePredicter.Controllers
     public class UsersController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IUserFactory _userFactory;
 
-        public UsersController(AppDbContext context)
+        public UsersController(AppDbContext context, IUserFactory userFactory)
         {
             _context = context;
+            _userFactory = userFactory;
         }
 
         // GET: Users
@@ -64,7 +67,7 @@ namespace TaskTimePredicter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,UserName,UserEmail,UserPassword,UserRole,CreatedAt")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,UserName,UserEmail,UserPassword,UserRole,CreatedAt")] User userInput)
         {
             var userRoles = new List<SelectListItem>
                         {
@@ -73,26 +76,27 @@ namespace TaskTimePredicter.Controllers
                         };
             if (ModelState.IsValid)
             {
-                //Validación 'CreatedAt' != Nulo ni vacío
-                if (user.CreatedAt==default)
+                try
                 {
-                    user.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
-                }
+                    // Usar UserFactory para crear un nuevo usuario
+                    var newUser = _userFactory.CreateUser(
+                        userInput.UserName,
+                        userInput.UserEmail,
+                        userInput.UserPassword,
+                        userInput.UserRole
+                    );
 
-                if (user.UserRole.IsNullOrEmpty() || user.UserRole == "")
-                {
-                    TempData["ErrorMessage"] = "Seleccione un Rol para asociar";
-                    ViewData["UserRole"] = userRoles;
-                    return View(user);
-                } else
-                {
-                    _context.Add(user);
+                    _context.Add(newUser);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
+                catch (ArgumentException ex)
+                {
+                    TempData["ErrorMessage"] = ex.Message;
+                }
             }
             ViewData["UserRole"] = userRoles;
-            return View(user);
+            return View(userInput);
         }
 
         // GET: Users/Edit/5
