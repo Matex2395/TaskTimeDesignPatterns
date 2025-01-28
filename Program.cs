@@ -12,6 +12,7 @@ builder.Services.AddControllersWithViews();
 // Configuración de Dependencias
 builder.Services.AddScoped<IUserFactory, UserFactory>();
 builder.Services.AddScoped<IProjectFactory, ProjectFactory>();
+builder.Services.AddScoped<ICategoryFactory, CategoryFactory>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConStr"))

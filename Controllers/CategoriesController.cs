@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TaskTimeDesignPatterns.Interfaces;
 using TaskTimePredicter.Data;
 using TaskTimePredicter.Models;
 
@@ -15,10 +16,12 @@ namespace TaskTimePredicter.Controllers
     public class CategoriesController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly ICategoryFactory _categoryFactory;
 
-        public CategoriesController(AppDbContext context)
+        public CategoriesController(AppDbContext context, ICategoryFactory categoryFactory)
         {
             _context = context;
+            _categoryFactory = categoryFactory;
         }
 
         // GET: Categories
@@ -61,7 +64,7 @@ namespace TaskTimePredicter.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                var createdCategory = _categoryFactory.CreateCategory(category.CategoryName, category.CategoryDescription);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
