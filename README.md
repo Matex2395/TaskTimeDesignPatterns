@@ -1,8 +1,20 @@
-  # TaskTimePredicter
+  # TaskTimeDesignPatterns
 
-Este repositorio contiene un proyecto que abarca principalmente un CORE de análisis de Productividad de 
-Proyectos de Software y también calcula el tiempo promedio de estimaciones de tiempo para completar tareas
-y el tiempo actual que tomó finalizarla. Este CORE es alimentado por varios CRUDs, de entre los cuales se destacan:
+Este repositorio contiene un proyecto al que se le han implementado los siguientes Patrones de Diseño y Principios SOLID:
+1. Factory Method: Creación de Usuarios, Proyectos y Categorías
+- Principio de Responsabilidad Única
+- Principio de Código Abierto - Cerrado
+2. Command: Creación y Edición de Subcategorías
+- Principio de Responsabilidad Única
+- Principio de Código Abierto - Cerrado
+3. Strategy: Algoritmos de Análisis del CORE
+- Principio de Código Abierto - Cerrado
+
+## Acerca del Proyecto
+
+El proyecto abarca principalmente un CORE de análisis de Productividad de Proyectos de Software y también 
+calcula el tiempo promedio de estimaciones de tiempo para completar tareas y el tiempo actual que tomó finalizarla. 
+Este CORE es alimentado por varios CRUDs, de entre los cuales se destacan:
 - Usuarios: Gestión de Usuarios que tendrán o el rol de ```"Administrador"``` o el de ```"Desarrollador"```.
 - Proyectos: Gestión de Proyectos de Software.
 - Categorías: Gestión de Categorías de Tareas para clasificarlas de mejor manera.
@@ -12,7 +24,7 @@ y el tiempo actual que tomó finalizarla. Este CORE es alimentado por varios CRU
 De igual forma, este proyecto cuenta con la funcionalidad de realizar comparaciones entre tiempos reales que les tomó a ciertos proyectos para finalizar, mostrando una 
 estadística de cuál de los Proyectos de Software duró menos, cual duró más y con qué diferencia se encuentran estos dos.
 
-Finalmente, este proyecto cuenta con las funciones de Registro, Inicio de Sesión y Autenticación de Usuarios, para poner
+A su vez, este proyecto cuenta con las funciones de Registro, Inicio de Sesión y Autenticación de Usuarios, para poner
 en práctica la restricción de ciertas funcionalidades a los usuarios ```"Desarrolladores"```.
 
 ## Tecnologías Utilizadas
@@ -23,6 +35,7 @@ ayuda para poder gestionar bases de datos desde la consola del Administrador de 
 Algunos desafíos encontrados fueron:
 1. Validar Campos Input: Hay muchas formas de validar estos campos para el usuario, pero a mi parecer es mejor validar con etiquetas de Modelo.
 2. Implementación del Core: Fue difícil definir el Core a desarrollar desde las tablas de información que se tenía, pero con el debido análisis se planteó una idea interesante.
+3. Implementación de Patrones de Diseño: La refactorización del código fue complicada para que funcione como estaba antes.
 
 ## Requisitos Previos
 
