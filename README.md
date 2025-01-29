@@ -1,13 +1,13 @@
   # TaskTimeDesignPatterns
 
 Este repositorio contiene un proyecto al que se le han implementado los siguientes Patrones de Diseño y Principios SOLID:
-1. Factory Method: Creación de Usuarios, Proyectos y Categorías
+1. **Factory Method**: Creación de Usuarios, Proyectos y Categorías
 - Principio de Responsabilidad Única
 - Principio de Código Abierto - Cerrado
-2. Command: Creación y Edición de Subcategorías
+2. **Command**: Creación y Edición de Subcategorías
 - Principio de Responsabilidad Única
 - Principio de Código Abierto - Cerrado
-3. Strategy: Algoritmos de Análisis del CORE
+3. **Strategy**: Algoritmos de Análisis del CORE
 - Principio de Código Abierto - Cerrado
 
 ## Acerca del Proyecto
